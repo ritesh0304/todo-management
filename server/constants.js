@@ -1,1 +1,1 @@
-export const DB_NAME="task management"
+export const DB_NAME="task-management"
