@@ -10,8 +10,6 @@ const taskSchema = mongoose.Schema({
     description:{
         type:String,
         required:true,
-        unique:true,
-        index:true
     },
     dueDate:{
          type:String,
@@ -21,4 +19,4 @@ const taskSchema = mongoose.Schema({
     timestamps:true
 })
 
-export const User=mongoose.model('Task',taskSchema);
+export const Task=mongoose.model('Task',taskSchema);
