@@ -9,7 +9,7 @@ function Task() {
   const navigate=useNavigate();
   const userData=localStorage.getItem("task-app");
   if(!userData){
-    navigate("/login")
+    navigate("/")
   }
   const [formData, setFormData] = useState({
     title: "",
@@ -65,9 +65,9 @@ function Task() {
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="taskForm" onSubmit={handleSubmit}>
         <div className="taskTitle">
-          <label htmlFor="title">
+        Title :  <label htmlFor="title">
             <input
               type="text"
               id="title"
@@ -80,7 +80,7 @@ function Task() {
           </label>
         </div>
         <div className="taskDescription">
-          <label htmlFor="description">
+        Description : <label htmlFor="description">
             <textarea
               id="description"
               name="description"
@@ -92,7 +92,7 @@ function Task() {
           </label>
         </div>
         <div className="taskDueDate">
-          <label htmlFor="date">Due Date:</label>
+        Due Date : <label htmlFor="date">
           <input
             type="date"
             id="date"
@@ -101,9 +101,10 @@ function Task() {
             onChange={handleChange}
             autoComplete="on"
           />
+          </label>
         </div>
 
-        <button type="submit">create a new task</button>
+        <button className="taskCreateButton" type="submit">create a new task</button>
       </form>
     </>
   );

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { authLogin } from "../APIRoutes/api.routes";
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Link} from "react-router-dom"
 import axios from 'axios'
 function Login() {
     const navigate=useNavigate();
@@ -17,6 +17,12 @@ function Login() {
     draggable: true,
     theme: "dark",
   };
+   useEffect(()=>{
+    const existedUser=localStorage.getItem("task-app");
+    if(existedUser){
+      navigate("/taskManagement")
+    }
+   },[])
   function handleChange(e) {
     const {name , value}=e.target;
     // console.log(name, value);
@@ -93,8 +99,10 @@ function Login() {
           <button type="submit" id="button">
             Submit
           </button>
+          <div className="navigateButton" > <p> New User? <Link to={"/register"}>Register</Link> </p></div>
         </div>
       </form>
+
       <ToastContainer/>
     </>
   );

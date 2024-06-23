@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { authRegister } from "../APIRoutes/api.routes";
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Link} from "react-router-dom"
 import axios from 'axios'
 function Register() {
     const navigate=useNavigate();
@@ -27,7 +27,12 @@ function Register() {
       [name]: value,
     }));
   }
-
+  useEffect(()=>{
+    const existedUser=localStorage.getItem("task-app");
+    if(existedUser){
+      navigate("/taskManagement")
+    }
+   },[])
   function handleValidation(){
     if(formData.username==""){
         toast.error("username is required", toastOptions);
@@ -58,7 +63,7 @@ function Register() {
              formData
             });
             if(res.data.success){    
-            navigate('/login');
+            navigate('/');
             }
           } catch (err) {
 
@@ -130,8 +135,11 @@ function Register() {
           <button type="submit" id="button">
             Submit
           </button>
+          <div className="navigateButton"> <p> Existed User? <Link to={"/"}>Login</Link> </p></div>
         </div>
+        
       </form>
+
       <ToastContainer/>
     </>
   );

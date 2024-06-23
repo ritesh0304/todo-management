@@ -17,19 +17,19 @@ export default function TaskManagement() {
   };
   function handleClick(){
      localStorage.clear();
-     navigate('/login');
+     navigate('/');
   }
   useEffect(()=>{
     // console.log(userData)
     if (!userData) {
-      navigate('/login');
+      navigate('/');
     }
   },[])
   return (
    userData?(<>
-       <h1>Your Tasks</h1>
-       <div>
-        <button className="logoutBtn" onClick={handleClick} >Logout</button>
+       <h1 className="heading">Todo Management App</h1>
+       <div className="logoutBtn">
+        <button onClick={handleClick} >Logout</button>
        </div>
         <Task />
         <GetAllTask/>

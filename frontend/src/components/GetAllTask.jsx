@@ -75,7 +75,7 @@ function GetAllTask() {
     try {
       const response = await axios.post(taskDelete, { taskId });
       if (response.data.success) {
-        toast.success("Task deleted successfully", toastOptions);
+        alert("succesfully deleted");
         setTasks(tasks.filter(task => task._id !== taskId));
       }
     } catch (error) {
@@ -94,16 +94,18 @@ function GetAllTask() {
   };
   return (
     <>
-      <h1>Your Tasks</h1>
+      <h1 className='heading'>Your Tasks : </h1>
       {tasks.map((task, index) => (
         <div key={index} className="task">
-          <h1>{task.title}</h1>
-          <p>{task.description}</p>
-          <p>Days left: {calculateDaysLeft(task.dueDate)}</p>
+          <h3><span>Title : </span>{task.title}</h3>
+          <p><span>description: </span>{task.description}</p>
+          <p> <span>Days left : </span> {calculateDaysLeft(task.dueDate)}</p>
           <button onClick={() => handleUpdate(task)}>Update</button>
           <button onClick={() => handleDelete(task._id)}>Delete</button>
         </div>
       ))}
+
+
       <TaskModal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
