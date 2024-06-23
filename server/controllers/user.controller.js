@@ -2,7 +2,8 @@ import { User } from "../models/user.model.js"
 
 
 export const userRegister = async (req, res, next) => {
-  const { username, email, password, confirmPassword } = req.body;
+  console.log(req.body)
+  const { username, email, password, confirmPassword } = req.body.formData;
   try {
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -42,7 +43,7 @@ export const userRegister = async (req, res, next) => {
 
 
 export const userLogin=async (req,res,next)=>{
-    const {email,password}=req.body;
+    const {email,password}=req.body.formData;
     try {
          const user= await User.findOne({email});
          if(!user){
