@@ -1,12 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getTask, taskUpdate, taskDelete } from '../APIRoutes/api.routes';
 import axios from 'axios';
+import TaskModal from './UpdateTaskModal'; // Import the modal component
 
 function GetAllTask() {
-  const user=JSON.parse(localStorage.getItem("task-app"));
-  const [tasks,setTasks]=useState([]);
+  const user = JSON.parse(localStorage.getItem("task-app"));
+  const [tasks, setTasks] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTask, setCurrentTask] = useState({
+    _id: "",
+    title: "",
+    description: "",
+    dueDate: ""
+  });
 
   const toastOptions = {
     position: "bottom-right",
@@ -16,57 +24,96 @@ function GetAllTask() {
     theme: "dark",
   };
 
-  useEffect(()=>{
-    async function fetch(){
+  useEffect(() => {
+    async function fetch() {
       try {
         const res = await axios.post(getTask, {
-           userId:user._id,
+          userId: user._id,
         });
-          setTasks(res.data.tasks)
-          // console.log(res)
+        setTasks(res.data.tasks);
       } catch (err) {
         toast.error(err.message, toastOptions);
       }
     }
     fetch();
+  }, []);
 
-  },[])
-  function handleUpdate(e,task_id){
+  const handleUpdate = (task) => {
+    setCurrentTask(task);
+    setIsModalOpen(true);
+  };
 
-  }
-  async function handleDelete(e,taskId){
-       try {
-        console.log(taskId)
-        console.log(taskDelete)
-          const response=await axios.post(taskDelete,{
-            taskId
-          })
-          console.log(response)
-          if(response.data.success){
-            toast.success("task deleted successfully",toastOptions);
-            window.location.reload();
-          }
-       } catch (error) {
-        toast.error("error while deleting the task"|| error.msg, toastOptions)
-       }
-  }
-  return (
-   <>
-   <h1>hello</h1>
-      {
-        tasks.map((task,index)=>{
-          return <div key={index} className="task">
-            <h1>{task.title}</h1>
-             <p>{task.description}</p>
-             <p>{task.dueDate}</p>
-             <button onClick={(e)=>handleUpdate(e,task._id)}>Update</button>
-             <button onClick={(e)=>handleDelete(e,task._id)}>Delete</button>
-          </div>
-          
-        })
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentTask(prevTask => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitModal = async (e) => {
+    e.preventDefault();
+    console.log("hello")
+    try {
+      const res = await axios.put(taskUpdate,{
+        currentTask
+      });
+      console.log(res)
+      if (res.data.success) {
+        setIsModalOpen(false);
+        alert("succesfully updated")
+
+        // reload option
+        setTasks(tasks.map(task => (task._id === currentTask._id ? currentTask : task)));
       }
-   </>
-  )
+    } catch (err) {
+      toast.error(err.message, toastOptions);
+    }
+  };
+
+  const handleDelete = async (taskId) => {
+    try {
+      const response = await axios.post(taskDelete, { taskId });
+      if (response.data.success) {
+        toast.success("Task deleted successfully", toastOptions);
+        setTasks(tasks.filter(task => task._id !== taskId));
+      }
+    } catch (error) {
+      toast.error("Error while deleting the task" || error.msg, toastOptions);
+    }
+  };
+  const calculateDaysLeft = (dueDate) => {
+
+    const due = new Date(dueDate);
+    const today = new Date();
+    console.log(today,due)
+    const timeDiff = due - today;
+    // console.log(timeDiff)
+    const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    return daysLeft >= 0 ? daysLeft : 0; // Ensure it doesn't show negative days
+  };
+  return (
+    <>
+      <h1>Your Tasks</h1>
+      {tasks.map((task, index) => (
+        <div key={index} className="task">
+          <h1>{task.title}</h1>
+          <p>{task.description}</p>
+          <p>Days left: {calculateDaysLeft(task.dueDate)}</p>
+          <button onClick={() => handleUpdate(task)}>Update</button>
+          <button onClick={() => handleDelete(task._id)}>Delete</button>
+        </div>
+      ))}
+      <TaskModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        task={currentTask}
+        handleChange={handleChange}
+        handleSubmitModal={handleSubmitModal}
+      />
+      <ToastContainer />
+    </>
+  );
 }
 
-export default GetAllTask
+export default GetAllTask;

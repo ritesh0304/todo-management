@@ -41,19 +41,18 @@ export const getAllTask = async (req, res, next) => {
 
 export const taskUpdate = async (req, res, next) => {
   try {
-    const { title, description, dueDate, taskId } = res.body.formData;
+    const { title, description, dueDate, _id} = req.body.currentTask;
     const updatedTask = await Task.findByIdAndUpdate(
-      taskId,
+      _id,
       { title, description, dueDate },
       { new: true }
     );
+    console.log()
     if (!updatedTask) {
-      return res.status(404).json({ message: "Task not found" });
+      return res.status(404).json({ success: false, message: 'Task not found' });
     }
-    res.json({
-        success: true,
-        msg: "successfully updated",
-      });
+
+    res.json({ success: true, task: updatedTask });
   } catch(error) {
     res.json({
       success: false,

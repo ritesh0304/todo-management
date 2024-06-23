@@ -4,5 +4,5 @@ export const taskRoute=Router();
 
 taskRoute.post("/setTask",setTask)
 taskRoute.post("/getAllTask",getAllTask)
-taskRoute.post("/taskUpdate",taskUpdate);
+taskRoute.put("/taskUpdate",taskUpdate);
 taskRoute.post("/taskDelete",taskDelete);
