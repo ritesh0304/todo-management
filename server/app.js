@@ -17,7 +17,9 @@ app.use(cors({
 
 // JSON parsing middleware
 app.use(express.json());
-
+app.use('/',(req,res)=>{
+  res.json({message: "Hello from Express App"});
+})
 // Routes
 app.use("/api/v1/auth", userRoute);
 app.use("/api/v1/task", taskRoute);
