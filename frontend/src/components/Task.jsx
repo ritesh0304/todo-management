@@ -7,12 +7,17 @@ import axios from "axios";
 
 function Task() {
   const navigate=useNavigate();
+  const userData=localStorage.getItem("task-app");
+  if(!userData){
+    navigate("/login")
+  }
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     dueDate:'',
-    userId: JSON.parse(localStorage.getItem("task-app"))._id,
+    userId: JSON.parse(localStorage.getItem("task-app"))?._id || "",
   });
+
   const toastOptions = {
     position: "bottom-right",
     autoClose: 5000,
@@ -49,9 +54,9 @@ function Task() {
         const res = await axios.post(setTask, {
           formData,
         });
-        console.log(res.data.success)
+        // console.log(res.data.success)
         if (res.data.success) {
-          navigate('/taskManagement')
+          window.location.reload();
         }
       } catch (err) {
         toast.error(err.message, toastOptions);

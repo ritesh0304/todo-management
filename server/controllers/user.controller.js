@@ -61,7 +61,7 @@ export const userLogin=async (req,res,next)=>{
                 msg:"wrong password"
                 })
          }
-        console.log(isValid)
+        // console.log(isValid)
          res.json({
             success:true,
             msg:"User login successfully",
