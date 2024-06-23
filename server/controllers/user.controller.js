@@ -2,7 +2,7 @@ import { User } from "../models/user.model.js"
 
 
 export const userRegister = async (req, res, next) => {
-  console.log(req.body)
+
   const { username, email, password, confirmPassword } = req.body.formData;
   try {
     // Check if passwords match
@@ -21,7 +21,13 @@ export const userRegister = async (req, res, next) => {
         msg: "User already exists"
       });
     }
-
+    const userExistsUsername = await User.exists({ username });
+    if (userExistsUsername) {
+      return res.json({
+        success: false,
+        msg: "User already exists"
+      });
+    }
     // Create new user and exclude password from the response
     const newUser = await User.create({ username, email, password });
     
@@ -33,8 +39,7 @@ export const userRegister = async (req, res, next) => {
     });
 
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({
+    res.json({
       success: false,
       msg: "Error registering user"
     });
@@ -42,37 +47,41 @@ export const userRegister = async (req, res, next) => {
 };
 
 
-export const userLogin=async (req,res,next)=>{
-    const {email,password}=req.body.formData;
-    try {
-         const user= await User.findOne({email});
-         if(!user){
-              res.json({
-             success:false,
-             msg:"user doesn't exist"
-              })
-         }
-         console.log("1")
-        //  console.log(email, password)
-         const isValid=await user.isValidPassword(password);
-         if(!isValid){
-            res.json({
-                success:false,
-                msg:"wrong password"
-                })
-         }
-        // console.log(isValid)
-         res.json({
-            success:true,
-            msg:"User login successfully",
-            user: user.toObject({ versionKey: false, transform: (doc, ret) => { delete ret.password; } }),
-        })
-         
-    } catch (error) {
-     res.json({
-         success:false,
-         msg:"Error login user"
-     })
-    }
- 
- }
+export const userLogin = async (req, res, next) => {
+  const { email, password } = req.body.formData;
+
+  try {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+          return res.json({
+              success: false,
+              msg: "User doesn't exist"
+          });
+      }
+      const isValid = await user.isValidPassword(password);
+
+      if (!isValid) {
+        return  res.json({
+              success: false,
+              msg: "Wrong password"
+          });
+      }
+
+      // If user and password are valid, prepare response
+      const userData = user.toObject({ versionKey: false, transform: (doc, ret) => { delete ret.password; } });
+
+      res.json({
+          success: true,
+          msg: "User logged in successfully",
+          user: userData
+      });
+
+  } catch (error) {
+      console.error("Error logging in user:", error);
+      res.json({
+          success: false,
+          msg: "Error logging in user"
+      });
+  }
+};

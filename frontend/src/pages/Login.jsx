@@ -53,13 +53,15 @@ function Login() {
              formData
             });
             if(res.data.success){    
-              console.log(res.data.user)
              localStorage.setItem("task-app",JSON.stringify(res.data.user));
              navigate("/taskManagement")
             }
+            if(!res.data.success){
+              toast.error(res.data.msg,toastOptions);
+            }
           } catch (err) {
 
-            toast.error(err.message,toastOptions);
+            toast.error("Error while logging",toastOptions);
           }
      }
   }
@@ -72,7 +74,7 @@ function Login() {
             <label htmlFor="email">
               <span>Email : </span>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 placeholder="enter your email"

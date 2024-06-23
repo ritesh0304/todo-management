@@ -1,45 +1,48 @@
-
-:root{
-    --primary-color:rgb(23, 23, 151);
-    --secondary-color:white;
-    --tertiary-color:rgb(50, 50, 87);
-    --background-color:rgb(21, 21, 40);
+:root {
+    --primary-color: rgb(101, 101, 214);
+    --secondary-color: white;
+    --tertiary-color: rgb(50, 50, 87);
+    --background-color: rgb(21, 21, 40);
 }
-*{
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
+
 body {
-    background-color:var(--background-color);
+    background-color: var(--background-color);
     color: var(--secondary-color);
-    font-family:'Courier New', Courier, monospace;
-    padding:20px 40px
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px 40px
 }
+
 .todoForm {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
+    gap: 15px;
 }
 
 .todoForm>div {
     /* border: 2px solid red; */
-    background-color:var(--tertiary-color);
+    background-color: var(--tertiary-color);
     padding: 10px 5px;
     border-radius: 10px;
 }
 
 .formItem {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin: 10px;
     width: 100%;
 }
 
 .formItem span {
     display: inline-block;
-    width: 200px;
+    width: 230px;
     text-align: right;
 }
 
@@ -60,7 +63,6 @@ button {
 
 button:hover {
     background-color: var(--background-color)
-
 }
 
 #button {
@@ -72,6 +74,7 @@ button:hover {
     border-radius: 10px;
     padding: 8px;
     color: white;
+    margin-bottom: 10px;
 }
 
 .navigateButton {
@@ -95,14 +98,16 @@ button:hover {
 
 /* task management */
 
-.taskForm{
+.taskForm {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 20px;
 }
 
-.taskForm div,.taskForm input, .taskForm textarea{
+.taskForm div,
+.taskForm input,
+.taskForm textarea {
     width: 65%;
     margin: auto;
     text-align: right;
@@ -110,60 +115,127 @@ button:hover {
 }
 
 @media screen and (max-width:750px) {
-    .taskForm div,.taskForm input, .taskForm textarea{
+    .formItem span {
+        text-align: left;
+        margin: 5px 0px;
+    }
+
+    .formItem input {
+        margin-left: 0px;
+        width: 90%;
+    }
+
+    .taskForm div,
+    .taskForm input,
+    .taskForm textarea {
         width: 100%;
         margin: auto;
         text-align: left;
-    
+
     }
 }
-.heading{
+
+.heading {
     margin: 50px 0px;
 }
-.taskForm input, .taskForm textarea{
+
+.taskForm input,
+.taskForm textarea {
     padding: 10px;
 }
-.taskForm input::placeholder, .taskForm textarea,.taskForm input[type="date"]  {
+
+.taskForm input::placeholder,
+.taskForm textarea,
+.taskForm input[type="date"] {
     text-align: left;
-  }
-  .logoutBtn{
+}
+
+.logoutBtn {
     width: 100%;
-  }
-.logoutBtn button{
+}
+
+.logoutBtn button {
     padding: 7px 20px;
     border-radius: 10px;
     width: 100px;
     float: inline-end;
-    margin: 20px 0px;
+    margin: 0px 0px 40px 0px;
 }
-.taskCreateButton{
+
+.taskCreateButton {
     width: 30%;
-   margin: auto;
-   padding: 8px;
-   border-radius: 10px;
+    margin: auto;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+
+
+.task {
+    /* border: 2px solid black; */
+    padding: 20px 10px;
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
 }
 
 @media screen and (max-width:750px) {
-    .taskCreateButton{
+    .taskCreateButton {
+        width: 100%;
+    }
+
+    .task {
         width: 100%;
     }
 }
+.task p{
+    font-weight: bold;
+}
+.task span {
+    font-size: 14px;
+    opacity: 80%;
+}
 
-.task{
-    /* border: 2px solid black; */
-    padding: 20px 10px;
-    margin-bottom: 20px;
-    background-color: var(--tertiary-color)
-}
-.task span{
-  font-size: 14px;
-  opacity: 80%;
-}
-.task h3, .task p{
+.task h3,
+.task p {
     margin: 8px 0px;
 }
-.task button{
+
+.task button {
     padding: 8px 20px;
     margin: 0px 10px;
     border-radius: 8px;
+}
+
+.disabled {
+    opacity: 30%;
+}
+
+.disabled button:hover {
+    background-color:red;
+}
+.disabled button{
+    background-color: red;
+}
+.ReactModal__Overlay {
+    background-color: var(--background-color) !important;
+    opacity: 95%;
+}
+
+.ReactModal__Content {
+    background-color: var(--background-color) !important;
+    opacity: 95%;
+}
+
+.UpdateModal input{
+
+   padding: 8px;
+   border-radius: 8px;
+   width: 92%;
+   margin: 10px;
+}
+.cursorDisable{
+    cursor: not-allowed;
 }

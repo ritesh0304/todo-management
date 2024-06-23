@@ -53,12 +53,11 @@ function GetAllTask() {
 
   const handleSubmitModal = async (e) => {
     e.preventDefault();
-    console.log("hello")
     try {
       const res = await axios.put(taskUpdate,{
         currentTask
       });
-      console.log(res)
+      // console.log(res)
       if (res.data.success) {
         setIsModalOpen(false);
         alert("succesfully updated")
@@ -86,21 +85,20 @@ function GetAllTask() {
 
     const due = new Date(dueDate);
     const today = new Date();
-    console.log(today,due)
     const timeDiff = due - today;
     // console.log(timeDiff)
     const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    return daysLeft >= 0 ? daysLeft : 0; // Ensure it doesn't show negative days
+    return daysLeft; // Ensure it doesn't show negative days
   };
   return (
     <>
       <h1 className='heading'>Your Tasks : </h1>
       {tasks.map((task, index) => (
-        <div key={index} className="task">
+        <div key={index}  className={`task ${calculateDaysLeft(task.dueDate) < 0 ? 'disabled' : ''}`} >
           <h3><span>Title : </span>{task.title}</h3>
           <p><span>description: </span>{task.description}</p>
           <p> <span>Days left : </span> {calculateDaysLeft(task.dueDate)}</p>
-          <button onClick={() => handleUpdate(task)}>Update</button>
+          <button onClick={() => handleUpdate(task)} disabled={calculateDaysLeft(task.dueDate) < 0} className={`${calculateDaysLeft(task.dueDate) < 0 ? 'cursorDisable' : ''}`}  >Update</button>
           <button onClick={() => handleDelete(task._id)}>Delete</button>
         </div>
       ))}

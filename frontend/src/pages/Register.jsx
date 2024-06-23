@@ -65,9 +65,10 @@ function Register() {
             if(res.data.success){    
             navigate('/');
             }
+            toast.error(res.data.msg,toastOptions);
           } catch (err) {
 
-            toast.error(err.message,toastOptions);
+            toast.error("error while registering",toastOptions);
           }
      }
   }
@@ -94,7 +95,7 @@ function Register() {
             <label htmlFor="email">
               <span>Email : </span>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 placeholder="enter your email"

@@ -47,9 +47,9 @@ export const taskUpdate = async (req, res, next) => {
       { title, description, dueDate },
       { new: true }
     );
-    console.log()
+
     if (!updatedTask) {
-      return res.status(404).json({ success: false, message: 'Task not found' });
+      return res.json({ success: false, message: 'Task not found' });
     }
 
     res.json({ success: true, task: updatedTask });
@@ -64,7 +64,7 @@ export const taskUpdate = async (req, res, next) => {
 export const taskDelete = async (req, res, next) => {
   try {
     const taskId = req.body.taskId;
-    console.log(taskId)
+    // console.log(taskId)
     const deletedTask = await Task.findByIdAndDelete(taskId);
     res.json({
         success: true,

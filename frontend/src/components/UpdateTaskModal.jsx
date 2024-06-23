@@ -7,33 +7,36 @@ const UpdateTaskModal = ({ isOpen, onRequestClose, task, handleChange, handleSub
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <h2>Update Task</h2>
-      <form onSubmit={handleSubmitModal}>
-        <div>
-          <label>Title</label>
+      <form className='UpdateModal task'  onSubmit={handleSubmitModal}>
+        <div className='taskTitle'>
+        Title : <label>
           <input
             type="text"
             name="title"
             value={task.title}
             onChange={handleChange}
           />
+          </label>
         </div>
-        <div>
-          <label>Description</label>
+        <div className='taskDescription'>
+        Description : <label>
           <input
             type="text"
             name="description"
             value={task.description}
             onChange={handleChange}
           />
+          </label>
         </div>
-        <div>
-          <label>Due Date</label>
+        <div className='taskDueDate'>
+        Due Date : <label>
           <input
             type="date"
             name="dueDate"
             value={task.dueDate}
             onChange={handleChange}
           />
+          </label>
         </div>
         <button type="submit">Save</button>
         <button type="button" onClick={onRequestClose}>Cancel</button>
