@@ -1,5 +1,5 @@
 // export const  hostname=" http://localhost:3000/api/v1"
-export const  hostname="https://todo-management-loew.onrender.com"
+export const  hostname="https://todo-management-2.onrender.com"
 
 export const authRegister=`${hostname}/auth/register`;
 export const authLogin=`${hostname}/auth/login`
