@@ -1,0 +1,47 @@
+body {
+    background-color: rgb(21, 21, 40);
+    color: white;
+}
+
+.todoForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.todoForm>div {
+    /* border: 2px solid red; */
+    background-color: rgb(50, 50, 87);
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+
+.formItem {
+    font-size: 1.5rem;
+    margin: 10px;
+    width: 100%;
+}
+
+.formItem span {
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+}
+
+.formItem input {
+    border-radius: 5px;
+    padding: 5px;
+    width: 200px;
+    margin-left: 5px;
+}
+#button{
+    width: 200px;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 5px;
+}

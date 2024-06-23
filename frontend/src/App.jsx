@@ -1,10 +1,28 @@
-
+import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import TaskManagement from './pages/TaskManagement'
 
 function App() {
+  
+  let route=createBrowserRouter([
+    {
+      path:"/register",
+      element:<Register/>
+    },
+    {
+      path:"/login",
+      element:<Login/>
+    },
+    {
+      path:"/taskManagement",
+      element:<TaskManagement/>
+    }
+  ])
 
   return (
     <>
-        <h1>Task management</h1>
+      <RouterProvider  router={route} />
     </>
   )
 }
