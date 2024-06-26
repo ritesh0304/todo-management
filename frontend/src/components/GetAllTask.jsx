@@ -88,7 +88,7 @@ function GetAllTask() {
     const timeDiff = due - today;
     // console.log(timeDiff)
     const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    return daysLeft; // Ensure it doesn't show negative days
+    return daysLeft; 
   };
   return (
     <>
@@ -97,7 +97,7 @@ function GetAllTask() {
         <div key={index}  className={`task ${calculateDaysLeft(task.dueDate) < 0 ? 'disabled' : ''}`} >
           <h3><span>Title : </span>{task.title}</h3>
           <p><span>description: </span>{task.description}</p>
-          <p> <span>Days left : </span> {calculateDaysLeft(task.dueDate)}</p>
+          <p> <span>Days left : </span> {calculateDaysLeft(task.dueDate)<0 ?"task expired":calculateDaysLeft(task.dueDate)}</p>
           <button onClick={() => handleUpdate(task)} disabled={calculateDaysLeft(task.dueDate) < 0} className={`${calculateDaysLeft(task.dueDate) < 0 ? 'cursorDisable' : ''}`}  >Update</button>
           <button onClick={() => handleDelete(task._id)}>Delete</button>
         </div>

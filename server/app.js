@@ -11,14 +11,16 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.CORS_ORIGIN, // Ensure CORS_ORIGIN is correctly set in your .env file
+  origin: process.env.CORS_ORIGIN||"http://localhost:5173/",
+  methods:['POST','GET','PUT'], // Ensure CORS_ORIGIN is correctly set in your .env file
   credentials: true, // Enable credentials (cookies, authorization headers) to be included in CORS requests
 }));
 
 // JSON parsing middleware
 app.use(express.json());
-app.use('/',(req,res)=>{
-  res.json({message: "Hello from Express App"});
+
+app.get('/',(req,res)=>{
+  res.send("api is working welll")
 })
 // Routes
 app.use("/api/v1/auth", userRoute);

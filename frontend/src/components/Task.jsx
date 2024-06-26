@@ -96,7 +96,7 @@ function Task() {
           <input
             type="date"
             id="date"
-            name="dueDate" // Ensure this matches the 'name' used in handleChange
+            name="dueDate" 
             value={formData.dueDate}
             onChange={handleChange}
             autoComplete="on"
