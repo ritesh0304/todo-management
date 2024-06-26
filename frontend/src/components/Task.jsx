@@ -38,10 +38,13 @@ function Task() {
 
   function handleValidation() {
     if (formData.title == "") {
-      toast.error("email is required", toastOptions);
+      toast.error("title is required", toastOptions);
       return false;
     } else if (formData.description == "") {
-      toast.error("password is required", toastOptions);
+      toast.error("description is required", toastOptions);
+      return false;
+    }else if (formData.dueDate == "") {
+      toast.error("Due Date is required", toastOptions);
       return false;
     }
     return true;
